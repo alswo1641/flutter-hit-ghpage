@@ -209,7 +209,7 @@ class BoardColumnWidget extends StatelessWidget {
                                             Align(
                                               alignment: Alignment.bottomRight,
                                               child: Padding(
-                                                padding: const EdgeInsets.all(8.0),
+                                                padding: const EdgeInsets.all(9.0),
                                                 child: Text(
                                                   task.assignee.isNotEmpty ? '담당자: ${task.assignee}' : '담당자 정보 없음',
                                                   style: TextStyle(color: Colors.grey),
