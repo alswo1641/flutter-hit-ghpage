@@ -2,10 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hit_project/board/controller/board_controller.dart';
 import 'package:hit_project/common/layout/app_text.dart';
+import 'package:hit_project/user/user_model.dart';
 import 'package:intl/intl.dart';
 
 class TaskFormDialog extends StatefulWidget {
-  final Task? initialTask;
+  final UserModel? initialTask;
   final Function(String title, String assignee, String content, DateTime date) onSave;
 
   TaskFormDialog({this.initialTask, required this.onSave});

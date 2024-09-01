@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hit_project/board/controller/board_controller.dart';
 import 'package:hit_project/board/widget/task_form_dialog_widget.dart';
 import 'package:hit_project/common/layout/app_text.dart';
-import 'package:intl/intl.dart'; // For date formatting
+import 'package:hit_project/user/user_model.dart';
+import 'package:intl/intl.dart';
 
 class BoardColumnWidget extends StatelessWidget {
   final String title;
-  final RxList<Task> tasks;
-  final Function(Task, int) onAccept;
-  final Function(Task) onMoveBack;
-  final List<RxList<Task>> allTasks;
+  final RxList<UserModel> tasks;
+  final Function(UserModel, int) onAccept;
+  final Function(UserModel) onMoveBack;
+  final List<RxList<UserModel>> allTasks;
 
   BoardColumnWidget({
     required this.title,
@@ -24,7 +24,7 @@ class BoardColumnWidget extends StatelessWidget {
   final RxBool isCreating = false.obs;
   final RxBool isButtonEnabled = false.obs;
 
-  void _showTaskFormDialog(BuildContext context, {Task? task}) {
+  void _showTaskFormDialog(BuildContext context, {UserModel? task}) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -32,7 +32,7 @@ class BoardColumnWidget extends StatelessWidget {
           initialTask: task,
           onSave: (title, assignee, content, date) {
             if (task == null) {
-              tasks.add(Task(
+              tasks.add(UserModel(
                 title: title,
                 assignee: assignee,
                 content: content,
@@ -40,7 +40,7 @@ class BoardColumnWidget extends StatelessWidget {
               ));
             } else {
               final index = tasks.indexOf(task);
-              tasks[index] = Task(
+              tasks[index] = UserModel(
                 title: title,
                 assignee: assignee,
                 content: content,
@@ -51,6 +51,10 @@ class BoardColumnWidget extends StatelessWidget {
         );
       },
     );
+  }
+
+  void _deleteTask(UserModel task) {
+    tasks.remove(task);
   }
 
   @override
@@ -88,7 +92,7 @@ class BoardColumnWidget extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             Expanded(
-              child: DragTarget<Task>(
+              child: DragTarget<UserModel>(
                 onWillAccept: (data) => true,
                 onAcceptWithDetails: (details) {
                   final task = details.data;
@@ -110,7 +114,7 @@ class BoardColumnWidget extends StatelessWidget {
                 builder: (context, candidateData, rejectedData) {
                   return Obx(() {
                     return tasks.isEmpty
-                        ? Center(child: Text('정보 없음', style: TextStyle(color: Colors.grey)))
+                        ? const Center(child: Text('정보 없음', style: TextStyle(color: Colors.grey)))
                         : ListView.builder(
                             itemCount: tasks.length,
                             itemBuilder: (context, index) {
@@ -121,22 +125,49 @@ class BoardColumnWidget extends StatelessWidget {
                                   onTap: () {
                                     _showTaskFormDialog(context, task: task);
                                   },
-                                  child: Draggable<Task>(
+                                  child: Draggable<UserModel>(
                                     data: task,
                                     feedback: Material(
                                       child: Container(
-                                        height: 156, // Height of the card
+                                        height: 180,
                                         width: MediaQuery.of(context).size.width * 0.2,
                                         child: Card(
                                           child: Column(
                                             crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
-                                              Padding(
-                                                padding: const EdgeInsets.all(8.0),
-                                                child: Text(
-                                                  task.title.isNotEmpty ? task.title : '제목 정보 없음',
-                                                  style: AppTextTheme.black14m,
-                                                ),
+                                              Row(
+                                                children: [
+                                                  Expanded(
+                                                    child: Padding(
+                                                      padding: const EdgeInsets.all(8.0),
+                                                      child: Text(
+                                                        task.title.isNotEmpty ? task.title : '제목 정보 없음',
+                                                        style: AppTextTheme.black14m,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  PopupMenuButton<String>(
+                                                    onSelected: (value) {
+                                                      if (value == 'edit') {
+                                                        _showTaskFormDialog(context, task: task);
+                                                      } else if (value == 'delete') {
+                                                        _deleteTask(task);
+                                                      }
+                                                    },
+                                                    itemBuilder: (BuildContext context) {
+                                                      return [
+                                                        PopupMenuItem(
+                                                          value: 'edit',
+                                                          child: Text('수정'),
+                                                        ),
+                                                        PopupMenuItem(
+                                                          value: 'delete',
+                                                          child: Text('삭제'),
+                                                        ),
+                                                      ];
+                                                    },
+                                                  ),
+                                                ],
                                               ),
                                               Padding(
                                                 padding: const EdgeInsets.all(8.0),
@@ -177,17 +208,44 @@ class BoardColumnWidget extends StatelessWidget {
                                       }
                                     },
                                     child: Container(
-                                      height: 156, // Height of the card
+                                      height: 180,
                                       child: Card(
                                         child: Column(
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
-                                            Padding(
-                                              padding: const EdgeInsets.all(8.0),
-                                              child: Text(
-                                                task.title.isNotEmpty ? task.title : '제목 정보 없음',
-                                                style: AppTextTheme.black14m,
-                                              ),
+                                            Row(
+                                              children: [
+                                                Expanded(
+                                                  child: Padding(
+                                                    padding: const EdgeInsets.all(8.0),
+                                                    child: Text(
+                                                      task.title.isNotEmpty ? task.title : '제목 정보 없음',
+                                                      style: AppTextTheme.black14m,
+                                                    ),
+                                                  ),
+                                                ),
+                                                PopupMenuButton<String>(
+                                                  onSelected: (value) {
+                                                    if (value == 'edit') {
+                                                      _showTaskFormDialog(context, task: task);
+                                                    } else if (value == 'delete') {
+                                                      _deleteTask(task);
+                                                    }
+                                                  },
+                                                  itemBuilder: (BuildContext context) {
+                                                    return [
+                                                      PopupMenuItem(
+                                                        value: 'edit',
+                                                        child: Text('수정'),
+                                                      ),
+                                                      PopupMenuItem(
+                                                        value: 'delete',
+                                                        child: Text('삭제'),
+                                                      ),
+                                                    ];
+                                                  },
+                                                ),
+                                              ],
                                             ),
                                             Padding(
                                               padding: const EdgeInsets.all(8.0),
