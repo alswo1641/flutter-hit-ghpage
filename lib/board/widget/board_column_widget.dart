@@ -78,22 +78,19 @@ class BoardColumnWidget extends StatelessWidget {
           children: [
             Row(
               children: [
-                Text(
-                  title,
-                  style: AppTextTheme.black14m,
-                ),
-                Spacer(),
+                Text(title, style: AppTextTheme.black14m),
+                const Spacer(),
                 TextButton.icon(
                   onPressed: () => _showTaskFormDialog(context),
-                  icon: Icon(Icons.add, color: Colors.blue),
-                  label: Text('일정 추가', style: TextStyle(color: Colors.blue)),
+                  icon: const Icon(Icons.add, color: Colors.blue),
+                  label: const Text('일정 추가', style: AppTextTheme.skyBlue14m),
                 ),
               ],
             ),
             const SizedBox(height: 20),
             Expanded(
               child: DragTarget<UserModel>(
-                onWillAccept: (data) => true,
+                onWillAcceptWithDetails: (data) => true,
                 onAcceptWithDetails: (details) {
                   final task = details.data;
                   final fromList = allTasks.firstWhere((list) => list.contains(task));
@@ -128,7 +125,7 @@ class BoardColumnWidget extends StatelessWidget {
                                   child: Draggable<UserModel>(
                                     data: task,
                                     feedback: Material(
-                                      child: Container(
+                                      child: SizedBox(
                                         height: 180,
                                         width: MediaQuery.of(context).size.width * 0.2,
                                         child: Card(
@@ -156,11 +153,11 @@ class BoardColumnWidget extends StatelessWidget {
                                                     },
                                                     itemBuilder: (BuildContext context) {
                                                       return [
-                                                        PopupMenuItem(
+                                                        const PopupMenuItem(
                                                           value: 'edit',
                                                           child: Text('수정'),
                                                         ),
-                                                        PopupMenuItem(
+                                                        const PopupMenuItem(
                                                           value: 'delete',
                                                           child: Text('삭제'),
                                                         ),
@@ -173,7 +170,7 @@ class BoardColumnWidget extends StatelessWidget {
                                                 padding: const EdgeInsets.all(8.0),
                                                 child: Text(
                                                   task.content.isNotEmpty ? '내용: ${task.content}' : '내용 정보 없음',
-                                                  style: TextStyle(color: Colors.grey),
+                                                  style: const TextStyle(color: Colors.grey),
                                                 ),
                                               ),
                                               Padding(
@@ -182,17 +179,17 @@ class BoardColumnWidget extends StatelessWidget {
                                                   task.date != null
                                                       ? '날짜: ${DateFormat('yyyy-MM-dd').format(task.date)}'
                                                       : '날짜 정보 없음',
-                                                  style: TextStyle(color: Colors.grey),
+                                                  style: const TextStyle(color: Colors.grey),
                                                 ),
                                               ),
-                                              Spacer(),
+                                              const Spacer(),
                                               Align(
                                                 alignment: Alignment.bottomRight,
                                                 child: Padding(
                                                   padding: const EdgeInsets.all(8.0),
                                                   child: Text(
                                                     task.assignee.isNotEmpty ? '담당자: ${task.assignee}' : '담당자 정보 없음',
-                                                    style: TextStyle(color: Colors.grey),
+                                                    style: const TextStyle(color: Colors.grey),
                                                   ),
                                                 ),
                                               ),
@@ -207,7 +204,7 @@ class BoardColumnWidget extends StatelessWidget {
                                         onMoveBack(task);
                                       }
                                     },
-                                    child: Container(
+                                    child: SizedBox(
                                       height: 180,
                                       child: Card(
                                         child: Column(
@@ -218,10 +215,8 @@ class BoardColumnWidget extends StatelessWidget {
                                                 Expanded(
                                                   child: Padding(
                                                     padding: const EdgeInsets.all(8.0),
-                                                    child: Text(
-                                                      task.title.isNotEmpty ? task.title : '제목 정보 없음',
-                                                      style: AppTextTheme.black14m,
-                                                    ),
+                                                    child: Text(task.title.isNotEmpty ? task.title : '제목 정보 없음',
+                                                        style: AppTextTheme.black14m),
                                                   ),
                                                 ),
                                                 PopupMenuButton<String>(
@@ -234,11 +229,11 @@ class BoardColumnWidget extends StatelessWidget {
                                                   },
                                                   itemBuilder: (BuildContext context) {
                                                     return [
-                                                      PopupMenuItem(
+                                                      const PopupMenuItem(
                                                         value: 'edit',
                                                         child: Text('수정'),
                                                       ),
-                                                      PopupMenuItem(
+                                                      const PopupMenuItem(
                                                         value: 'delete',
                                                         child: Text('삭제'),
                                                       ),
@@ -249,29 +244,25 @@ class BoardColumnWidget extends StatelessWidget {
                                             ),
                                             Padding(
                                               padding: const EdgeInsets.all(8.0),
-                                              child: Text(
-                                                task.content.isNotEmpty ? '내용: ${task.content}' : '내용 정보 없음',
-                                                style: TextStyle(color: Colors.grey),
-                                              ),
+                                              child: Text(task.content.isNotEmpty ? '내용: ${task.content}' : '내용 정보 없음',
+                                                  style: AppTextTheme.grey13m),
                                             ),
                                             Padding(
                                               padding: const EdgeInsets.all(8.0),
                                               child: Text(
-                                                task.date != null
-                                                    ? '날짜: ${DateFormat('yyyy-MM-dd').format(task.date)}'
-                                                    : '날짜 정보 없음',
-                                                style: TextStyle(color: Colors.grey),
-                                              ),
+                                                  task.date != null
+                                                      ? '날짜: ${DateFormat('yyyy-MM-dd').format(task.date)}'
+                                                      : '날짜 정보 없음',
+                                                  style: AppTextTheme.grey13m),
                                             ),
-                                            Spacer(),
+                                            const Spacer(),
                                             Align(
                                               alignment: Alignment.bottomRight,
                                               child: Padding(
                                                 padding: const EdgeInsets.all(8.0),
                                                 child: Text(
-                                                  task.assignee.isNotEmpty ? '담당자: ${task.assignee}' : '담당자 정보 없음',
-                                                  style: TextStyle(color: Colors.grey),
-                                                ),
+                                                    task.assignee.isNotEmpty ? '담당자: ${task.assignee}' : '담당자 정보 없음',
+                                                    style: AppTextTheme.grey13m),
                                               ),
                                             ),
                                           ],

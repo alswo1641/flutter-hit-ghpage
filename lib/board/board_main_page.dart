@@ -24,7 +24,7 @@ class BoardMainPage extends StatelessWidget {
         title: "flutter 테스트",
         assignee: "김민수",
         content: "플러터 개발 마무리 총 테스트입니다.",
-        date: DateTime.now().add(Duration(days: 2)),
+        date: DateTime.now().add(const Duration(days: 2)),
       ),
     ]);
 
@@ -33,7 +33,7 @@ class BoardMainPage extends StatelessWidget {
         title: "앱등록",
         assignee: "박수진",
         content: "테스트플라이트 등록 및 앱스토어 등록 할예정입니다.",
-        date: DateTime.now().add(Duration(days: 3)),
+        date: DateTime.now().add(const Duration(days: 3)),
       ),
     ]);
 
@@ -42,7 +42,7 @@ class BoardMainPage extends StatelessWidget {
         title: "마무리 개발",
         assignee: "권민재",
         content: "예외처리 및 디자인 수정",
-        date: DateTime.now().add(Duration(days: 2)),
+        date: DateTime.now().add(const Duration(days: 2)),
       ),
     ]);
 
@@ -51,7 +51,7 @@ class BoardMainPage extends StatelessWidget {
         title: "면접합격",
         assignee: "권민재",
         content: "잘부탁드립니다.",
-        date: DateTime.now().add(Duration(days: 3)),
+        date: DateTime.now().add(const Duration(days: 3)),
       ),
     ]);
 
