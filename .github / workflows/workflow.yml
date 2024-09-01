@@ -1,24 +1,36 @@
-name: Build and deploy flutter web app
-
+name: Flutter Web
 on:
   push:
-    branches: [ "main" ]
-
+    branches:
+      - master
 jobs:
   build:
+    name: Build Web
+    env:
+      my_secret: $
     runs-on: ubuntu-latest
-
     steps:
-      - uses: actions/checkout@v3
-      - uses: subosito/flutter-action@v2
+      - uses: actions/checkout@v1
+      - uses: subosito/flutter-action@v1
         with:
-          channel: 'master'
-      - run: flutter pub get
+          channel: 'dev'
       - run: flutter config --enable-web
-      - run: flutter build web --base-href "/${{ github.event.repository.name }}/"
-
-      - run: git config user.name github-actions
-      - run: git config user.email github-actions@github.com
-      - run: git --work-tree build/web add --all
-      - run: git commit -m "Automatic deployment by github-actions"
-      - run: git push origin HEAD:gh_pages --force
+      - run: flutter pub get
+      - run: flutter build web --release
+        # 1. change path which exist lib/main.dart
+        working-directory: ./flutter-hit-ghpage
+      - run: |
+          # 2. change path to [existed lib/main.dart path]/build/web
+          cd flutter-hit-ghpage/build/web
+          git init
+           # 3. change your email
+          git config --global user.email kny71167@gmail.com
+          # 4. change your name
+          git config --global user.name alswo1641
+          git status
+          # 5. change your repository
+          git remote add origin https://github.com/alswo1641/flutter-hit-ghpage.git
+          git checkout -b gh-pages
+          git add --all
+          git commit -m "update"
+          git push origin gh-pages -f
