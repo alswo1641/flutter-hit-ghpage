@@ -9,6 +9,8 @@ class BoardMainPage extends StatelessWidget {
   final RxList<UserModel> inProgressTasks = <UserModel>[].obs;
   final RxList<UserModel> completedTasks = <UserModel>[].obs;
 
+  BoardMainPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     final List<RxList<UserModel>> allTasks = [todoTasks, urgentTasks, inProgressTasks, completedTasks];

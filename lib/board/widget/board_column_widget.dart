@@ -13,6 +13,7 @@ class BoardColumnWidget extends StatelessWidget {
   final List<RxList<UserModel>> allTasks;
 
   BoardColumnWidget({
+    super.key,
     required this.title,
     required this.tasks,
     required this.onAccept,

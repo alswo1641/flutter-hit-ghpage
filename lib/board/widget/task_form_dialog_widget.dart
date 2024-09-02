@@ -1,6 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:hit_project/board/controller/board_controller.dart';
 import 'package:hit_project/common/layout/app_text.dart';
 import 'package:hit_project/user/user_model.dart';
 import 'package:intl/intl.dart';
@@ -9,7 +7,7 @@ class TaskFormDialog extends StatefulWidget {
   final UserModel? initialTask;
   final Function(String title, String assignee, String content, DateTime date) onSave;
 
-  TaskFormDialog({this.initialTask, required this.onSave});
+  const TaskFormDialog({super.key, this.initialTask, required this.onSave});
 
   @override
   _TaskFormDialogState createState() => _TaskFormDialogState();
@@ -75,13 +73,13 @@ class _TaskFormDialogState extends State<TaskFormDialog> {
       content: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           Container(
-            margin: EdgeInsets.only(bottom: 10),
+            margin: const EdgeInsets.only(bottom: 10),
             child: CupertinoTextField(
               controller: _titleController,
               placeholder: '제목',
-              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               decoration: BoxDecoration(
                 border: Border.all(color: CupertinoColors.separator),
                 borderRadius: BorderRadius.circular(8),
@@ -89,11 +87,11 @@ class _TaskFormDialogState extends State<TaskFormDialog> {
             ),
           ),
           Container(
-            margin: EdgeInsets.only(bottom: 10),
+            margin: const EdgeInsets.only(bottom: 10),
             child: CupertinoTextField(
               controller: _assigneeController,
               placeholder: '담당자',
-              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               decoration: BoxDecoration(
                 border: Border.all(color: CupertinoColors.separator),
                 borderRadius: BorderRadius.circular(8),
@@ -101,11 +99,11 @@ class _TaskFormDialogState extends State<TaskFormDialog> {
             ),
           ),
           Container(
-            margin: EdgeInsets.only(bottom: 10),
+            margin: const EdgeInsets.only(bottom: 10),
             child: CupertinoTextField(
               controller: _contentController,
               placeholder: '내용',
-              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               decoration: BoxDecoration(
                 border: Border.all(color: CupertinoColors.separator),
                 borderRadius: BorderRadius.circular(8),
